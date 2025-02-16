@@ -2,11 +2,11 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
+
+	"github.com/adrianosela/adventofcode-2024/utils/sliceconv"
 )
 
 const (
@@ -37,7 +37,7 @@ func part1(inputPath string) {
 		line := scanner.Text()
 		totalReports++
 
-		levels, err := toIntSlice(strings.Split(line, " "))
+		levels, err := sliceconv.StringsToInts(strings.Split(line, " "))
 		if err != nil {
 			log.Fatalf("failed to parse values at line %d \"%s\": %v", totalReports, line, err)
 		}
@@ -68,7 +68,7 @@ func part2(inputPath string) {
 		line := scanner.Text()
 		totalReports++
 
-		levels, err := toIntSlice(strings.Split(line, " "))
+		levels, err := sliceconv.StringsToInts(strings.Split(line, " "))
 		if err != nil {
 			log.Fatalf("failed to parse values at line %d \"%s\": %v", totalReports, line, err)
 		}
@@ -82,20 +82,6 @@ func part2(inputPath string) {
 	}
 
 	log.Printf("[Answer to Part 2] The number of safe reports is: %d/%d", safeReports, totalReports)
-}
-
-func toIntSlice(strings []string) ([]int, error) {
-	ints := make([]int, 0, len(strings))
-
-	for i, elem := range strings {
-		parsed, err := strconv.Atoi(elem)
-		if err != nil {
-			return nil, fmt.Errorf("failed to parse value at index %d: %v", i, err)
-		}
-		ints = append(ints, parsed)
-	}
-
-	return ints, nil
 }
 
 func isSafeReport(levels []int) bool {
