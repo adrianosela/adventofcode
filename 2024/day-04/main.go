@@ -6,12 +6,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-)
 
-type offset struct {
-	x int
-	y int
-}
+	"github.com/adrianosela/adventofcode-2024/utils/grid"
+)
 
 const (
 	charM = 'M'
@@ -29,15 +26,15 @@ const (
 )
 
 var (
-	directions = map[string]*offset{
-		directionN:  {x: 0, y: -1},
-		directionNE: {x: 1, y: -1},
-		directionE:  {x: 1, y: 0},
-		directionSE: {x: 1, y: 1},
-		directionS:  {x: 0, y: 1},
-		directionSW: {x: -1, y: 1},
-		directionW:  {x: -1, y: 0},
-		directionNW: {x: -1, y: -1},
+	directions = map[string]*grid.Coordinate{
+		directionN:  {X: 0, Y: -1},
+		directionNE: {X: 1, Y: -1},
+		directionE:  {X: 1, Y: 0},
+		directionSE: {X: 1, Y: 1},
+		directionS:  {X: 0, Y: 1},
+		directionSW: {X: -1, Y: 1},
+		directionW:  {X: -1, Y: 0},
+		directionNW: {X: -1, Y: -1},
 	}
 )
 
@@ -167,8 +164,8 @@ func getCharInDirection(
 	if !ok {
 		panic(fmt.Sprintf("no offsets for direction %s", direction))
 	}
-	newX := posX + offset.x
-	newY := posY + offset.y
+	newX := posX + offset.X
+	newY := posY + offset.Y
 
 	// check new positions are valid (stil in grid)
 	if newY >= len(grid) || newY < 0 || newX >= len(grid[0]) || newX < 0 {
@@ -209,8 +206,8 @@ func match(
 	if !ok {
 		panic(fmt.Sprintf("no offsets for direction %s", direction))
 	}
-	newX := posX + offset.x
-	newY := posY + offset.y
+	newX := posX + offset.X
+	newY := posY + offset.Y
 
 	// check new positions are valid (stil in grid)
 	if newY >= len(grid) || newY < 0 || newX >= len(grid[0]) || newX < 0 {
