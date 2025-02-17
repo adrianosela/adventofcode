@@ -1,16 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"log"
-	"os"
-	"strings"
 
-	"github.com/adrianosela/adventofcode-2024/utils/grid"
-	"github.com/adrianosela/adventofcode-2024/utils/set"
-	"github.com/adrianosela/adventofcode-2024/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/grid"
+	"github.com/adrianosela/adventofcode/utils/set"
 )
 
 func main() {
@@ -20,7 +16,7 @@ func main() {
 	trailEnd := flag.Int("trail-end", 9, "Value indicating end of the trail")
 	flag.Parse()
 
-	g, err := loadGrid(*filename)
+	g, err := grid.LoadInt(*filename, "")
 	if err != nil {
 		log.Fatalf("failed to load input grid: %v", err)
 	}
@@ -31,33 +27,6 @@ func main() {
 
 	fmt.Println(countUniqueTrails(g, *trailStart, *trailEnd, *debug)) // answer to part one
 	fmt.Println(countPaths(g, *trailStart, *trailEnd, *debug))        // answer to part two
-}
-
-func loadGrid(path string) (grid.Grid[int], error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open input file: %v", err)
-	}
-	defer file.Close()
-
-	grid := make(grid.Grid[int], 0)
-
-	scanner := bufio.NewScanner(file)
-	for lineNo := 0; scanner.Scan(); lineNo++ {
-		line := scanner.Text()
-
-		row, err := sliceconv.StringsToInts(strings.Split(line, ""))
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert line %d to a slice of integers: %v", lineNo, err)
-		}
-
-		grid = append(grid, row)
-	}
-	if err := scanner.Err(); err != nil {
-		return nil, fmt.Errorf("failed to scan input file: %v", err)
-	}
-
-	return grid, nil
 }
 
 func countPaths(

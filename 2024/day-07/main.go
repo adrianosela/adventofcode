@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/adrianosela/adventofcode-2024/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/sliceconv"
 )
 
 func main() {

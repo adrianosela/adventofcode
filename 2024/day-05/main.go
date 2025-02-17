@@ -9,11 +9,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/adrianosela/adventofcode-2024/utils/set"
-	"github.com/adrianosela/adventofcode-2024/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/set"
+	"github.com/adrianosela/adventofcode/utils/sliceconv"
 )
-
-type rules map[int]set.Set[int]
 
 func main() {
 	filename := flag.String("filename", "sample-input.txt", "The path to the input file")
@@ -24,55 +22,18 @@ func main() {
 }
 
 func solve(filename string, debug bool) int {
-	rulesReadOnly, updates, err := loadInput(filename)
+	rules, updates, err := loadInput(filename)
 	if err != nil {
 		log.Fatalf("failed to load inputs from file: %v", err)
 	}
 
-	sumOfValidMiddleElems := 0
-	for _, update := range updates {
-		if debug {
-			log.Printf("--------------------------\nworking on update %v", update)
-		}
-
-		isValid := true
-
-		// need fresh rules
-		rules := copyRules(rulesReadOnly)
-
-		for _, toPrint := range update {
-			if debug {
-				log.Printf("[START] want to print %d, require %v", toPrint, rules[toPrint])
-			}
-
-			// not valid unless there is nothing else to be printed
-			if rules[toPrint].Size() != 0 {
-				if debug {
-					log.Printf("[ERROR] cannot print %d, require %v", toPrint, rules[toPrint])
-				}
-				isValid = false
-				break
-			}
-
-			// remove the current value to be printed
-			for _, rule := range rules {
-				rule.Remove(toPrint)
-			}
-		}
-
-		if isValid {
-			sumOfValidMiddleElems += update[len(update)/2] // add the middle element
-		}
+	if debug {
+		log.Printf("Got Rules: %v", rules)
+		log.Printf("Got Updates: %v", updates)
 	}
-	return sumOfValidMiddleElems
-}
 
-func copyRules(rules map[int]set.Set[int]) map[int]set.Set[int] {
-	m2 := make(map[int]set.Set[int])
-	for k, v := range rules {
-		m2[k] = v.Copy()
-	}
-	return m2
+	// TODO
+	return -1
 }
 
 func loadInput(filename string) (map[int]set.Set[int], [][]int, error) {

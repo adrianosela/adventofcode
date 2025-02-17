@@ -1,3 +1,3 @@
-module github.com/adrianosela/adventofcode-2024
+module github.com/adrianosela/adventofcode
 
 go 1.24.0

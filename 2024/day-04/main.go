@@ -1,13 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"log"
-	"os"
 
-	"github.com/adrianosela/adventofcode-2024/utils/grid"
+	"github.com/adrianosela/adventofcode/utils/grid"
 )
 
 const (
@@ -62,34 +60,8 @@ func main() {
 
 }
 
-func loadGrid(path string, debug bool) ([][]byte, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open input file: %v", err)
-	}
-	defer file.Close()
-
-	grid := [][]byte{}
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		if len(line) > 0 {
-			grid = append(grid, []byte(line))
-		}
-	}
-	if err := scanner.Err(); err != nil {
-		return nil, fmt.Errorf("failed to scan input file: %v", err)
-	}
-
-	if debug && len(grid) > 0 {
-		log.Printf("loaded %d by %d grid", len(grid), len(grid[0]))
-	}
-
-	return grid, nil
-}
-
 func findCrossedMASes(inputPath string, debug bool) int {
-	grid, err := loadGrid(inputPath, debug)
+	grid, err := grid.LoadByte(inputPath)
 	if err != nil {
 		log.Fatalf("failed to load grid from input file: %v", err)
 	}
@@ -129,7 +101,7 @@ func findCrossedMASes(inputPath string, debug bool) int {
 }
 
 func findString(inputPath string, str string, debug bool) int {
-	grid, err := loadGrid(inputPath, debug)
+	grid, err := grid.LoadByte(inputPath)
 	if err != nil {
 		log.Fatalf("failed to load grid from input file: %v", err)
 	}

@@ -1,14 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"log"
-	"os"
 
-	"github.com/adrianosela/adventofcode-2024/utils/grid"
-	"github.com/adrianosela/adventofcode-2024/utils/set"
+	"github.com/adrianosela/adventofcode/utils/grid"
+	"github.com/adrianosela/adventofcode/utils/set"
 )
 
 const (
@@ -54,19 +52,6 @@ func main() {
 	log.Printf("[Answer to Part 2] The number of unique locations to place obstruction is %d", locations)
 }
 
-func loadGrid(filename string) (grid.Grid[byte], error) {
-	file, err := os.Open(filename)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open input file: %v", err)
-	}
-	g := grid.New[byte]()
-	scanner := bufio.NewScanner(file)
-	for lineNo := 0; scanner.Scan(); lineNo++ {
-		g = append(g, []byte(scanner.Text()))
-	}
-	return g, nil
-}
-
 func findGuard(g grid.Grid[byte]) (*grid.Coordinate, bool) {
 	for y := 0; y < len(g); y++ {
 		for x := 0; x < len(g[y]); x++ {
@@ -79,7 +64,7 @@ func findGuard(g grid.Grid[byte]) (*grid.Coordinate, bool) {
 }
 
 func part1(filename string) (int, error) {
-	g, err := loadGrid(filename)
+	g, err := grid.LoadByte(filename)
 	if err != nil {
 		return 0, fmt.Errorf("failed to load grid: %v", err)
 	}
@@ -95,7 +80,7 @@ func part1(filename string) (int, error) {
 }
 
 func part2(filename string) (int, error) {
-	g, err := loadGrid(filename)
+	g, err := grid.LoadByte(filename)
 	if err != nil {
 		return 0, fmt.Errorf("failed to load grid: %v", err)
 	}
