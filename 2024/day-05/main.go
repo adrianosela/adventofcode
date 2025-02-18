@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -14,26 +13,67 @@ import (
 )
 
 func main() {
-	filename := flag.String("filename", "sample-input.txt", "The path to the input file")
-	debug := flag.Bool("debug", false, "Whether to print debug output or not")
-	flag.Parse()
+	log.Printf("[Answer to Sample in Part 1] The result is: %d (should be 143)", part1("sample-input.txt"))
+	log.Printf("[Answer to Part 1] The result is: %d", part1("input.txt"))
 
-	fmt.Println(solve(*filename, *debug))
+	log.Printf("[Answer to Sample in Part 2] The result is: %d (should be 123)", part2("sample-input.txt"))
+	log.Printf("[Answer to Part 2] The result is: %d", part2("input.txt"))
 }
 
-func solve(filename string, debug bool) int {
+func part2(filename string) int {
 	rules, updates, err := loadInput(filename)
 	if err != nil {
 		log.Fatalf("failed to load inputs from file: %v", err)
 	}
-
-	if debug {
-		log.Printf("Got Rules: %v", rules)
-		log.Printf("Got Updates: %v", updates)
+	sum := 0
+	for u := 0; u < len(updates); u++ {
+		if !isCorrectOrder(updates[u], rules) {
+			correctOrderInPlace(updates[u], rules)
+			sum += updates[u][len(updates[u])/2]
+		}
 	}
+	return sum
+}
 
-	// TODO
-	return -1
+func part1(filename string) int {
+	rules, updates, err := loadInput(filename)
+	if err != nil {
+		log.Fatalf("failed to load inputs from file: %v", err)
+	}
+	sum := 0
+	for u := 0; u < len(updates); u++ {
+		if isCorrectOrder(updates[u], rules) {
+			sum += updates[u][len(updates[u])/2]
+		}
+	}
+	return sum
+}
+
+func isCorrectOrder(update []int, rules map[int]set.Set[int]) bool {
+	for i := 0; i < len(update); i++ {
+		for j := i + 1; j < len(update); j++ {
+			requirements, hasRequirements := rules[update[i]]
+			if hasRequirements {
+				if requirements.Has(update[j]) {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
+func correctOrderInPlace(update []int, rules map[int]set.Set[int]) {
+	for i := 0; i < len(update)-1; i++ {
+		for j := i + 1; j < len(update); j++ {
+			requirements, hasRequirements := rules[update[i]]
+			if hasRequirements && requirements.Has(update[j]) {
+				update[i], update[j] = update[j], update[i]
+				i = -1 // to ensure order
+				break
+			}
+		}
+	}
 }
 
 func loadInput(filename string) (map[int]set.Set[int], [][]int, error) {
