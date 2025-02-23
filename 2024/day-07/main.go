@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/adrianosela/adventofcode/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/slice"
 )
 
 func main() {
@@ -50,7 +50,7 @@ func part1(filename string) (int, error) {
 			return 0, fmt.Errorf("invalid input on line %d: first part not an integer", lineNo)
 		}
 
-		operands, err := sliceconv.StringsToInts(strings.Split(operandsStr, " "))
+		operands, err := slice.StringsToInts(strings.Split(operandsStr, " "))
 		if err != nil {
 			return 0, fmt.Errorf("invalid input on line %d: %v", lineNo, err)
 		}
@@ -95,7 +95,7 @@ func part2(filename string) (int, error) {
 			return 0, fmt.Errorf("invalid input on line %d: first part not an integer", lineNo)
 		}
 
-		operands, err := sliceconv.StringsToInts(strings.Split(operandsStr, " "))
+		operands, err := slice.StringsToInts(strings.Split(operandsStr, " "))
 		if err != nil {
 			return 0, fmt.Errorf("invalid input on line %d: %v", lineNo, err)
 		}

@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/adrianosela/adventofcode/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/slice"
 )
 
 const (
@@ -37,7 +37,7 @@ func part1(inputPath string) {
 		line := scanner.Text()
 		totalReports++
 
-		levels, err := sliceconv.StringsToInts(strings.Split(line, " "))
+		levels, err := slice.StringsToInts(strings.Split(line, " "))
 		if err != nil {
 			log.Fatalf("failed to parse values at line %d \"%s\": %v", totalReports, line, err)
 		}
@@ -68,7 +68,7 @@ func part2(inputPath string) {
 		line := scanner.Text()
 		totalReports++
 
-		levels, err := sliceconv.StringsToInts(strings.Split(line, " "))
+		levels, err := slice.StringsToInts(strings.Split(line, " "))
 		if err != nil {
 			log.Fatalf("failed to parse values at line %d \"%s\": %v", totalReports, line, err)
 		}

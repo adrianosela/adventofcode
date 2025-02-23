@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/adrianosela/adventofcode/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/slice"
 )
 
 type Grid[T any] [][]T
@@ -39,7 +39,7 @@ func LoadInt(filename string, delim string) (Grid[int], error) {
 	grid := New[int]()
 	scanner := bufio.NewScanner(file)
 	for lineNo := 0; scanner.Scan(); lineNo++ {
-		slice, err := sliceconv.StringsToInts(strings.Split(scanner.Text(), delim))
+		slice, err := slice.StringsToInts(strings.Split(scanner.Text(), delim))
 		if err != nil {
 			return nil, fmt.Errorf("failed to convert line %d to integers slice: %v", lineNo, err)
 		}

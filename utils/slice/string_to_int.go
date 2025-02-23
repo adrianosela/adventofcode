@@ -1,4 +1,4 @@
-package sliceconv
+package slice
 
 import (
 	"fmt"

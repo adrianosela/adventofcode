@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/adrianosela/adventofcode/utils/set"
-	"github.com/adrianosela/adventofcode/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/slice"
 )
 
 func main() {
@@ -126,7 +126,7 @@ func loadInput(filename string) (map[int]set.Set[int], [][]int, error) {
 			continue
 		}
 
-		ints, err := sliceconv.StringsToInts(strings.Split(line, ","))
+		ints, err := slice.StringsToInts(strings.Split(line, ","))
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to convert update line to a slice of integers: %v", err)
 		}

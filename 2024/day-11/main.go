@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/adrianosela/adventofcode/utils/sliceconv"
+	"github.com/adrianosela/adventofcode/utils/slice"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	logDurations := flag.Bool("log-durations", false, "Whether to log the blinking computation's durations")
 	flag.Parse()
 
-	ints, err := sliceconv.StringsToInts(strings.Split(*input, " "))
+	ints, err := slice.StringsToInts(strings.Split(*input, " "))
 	if err != nil {
 		log.Fatalf("failed to convert string to integer slice: %v", err)
 	}
